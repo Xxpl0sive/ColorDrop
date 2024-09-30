@@ -47,7 +47,7 @@ async function zephiidrop() {
 
   // Start Point
   makeTriggerBox(new BS.Vector3(-7.33,-9.4,-6.12), new BS.Vector3(80,1,80), new BS.Vector4(0,1,0,0), () => {
-      if(!isStarted) { isStarted = true; startTime = new Date().getTime(); }
+      isStarted = true; startTime = new Date().getTime();
   });
   // Finish Point
   makeTriggerBox(new BS.Vector3(-2,-308.9,-4), new BS.Vector3(90,1,90), new BS.Vector4(0,0,0,0), () => {
