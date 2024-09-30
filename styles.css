@@ -1,0 +1,27 @@
+:root { color-scheme: dark; }
+/* Button Colours */
+a.buttonG { color: #00FF00; }
+a.buttonY { color: #FFFF00; }
+a.buttonGY { color: #AAFF00; }
+a.buttonR { color: #FF0000; }
+a.buttonW { color: #FFFFFF; }
+/* Button styles */
+a.buttonss { 
+	padding: 0.8vh 0.8vw;  border: 2px solid #989898; border-radius: 2vh;
+	background-color: #000000; text-decoration: none; margin:2px; line-height: 2.2;
+  white-space: nowrap; display: inline;
+}
+
+/* Base styles */
+body { font-size: 35px; color: #FFFFFF; margin: 0; margin-left:100px; margin-right:100px; padding: 0; height: 100vh; background-color:#000000; position: relative;}
+
+body::before {
+  content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("https://firer.at/files/FireRat-Logo-V2.png");
+  background-repeat: no-repeat; background-position: top center; background-size: contain 70%; z-index: -1;
+}
+/* Larger screens */
+@media (min-width: 1200px) { body { font-size: 45px; background-color:#000000; color: #FFFFFF; } .button {font-size: 35px;} .form-thing {font-size: 50px;} } 
+/* Smaller tablets and mobiles */
+@media (max-width: 900px) { body { font-size: 30px; background-color:#000000; color: #FFFFFF; } .button {font-size: 25px;} .form-thing {font-size: 30px;} }
+input.url {font-size: 30px;}
