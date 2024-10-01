@@ -26,22 +26,12 @@ BS.BanterScene.GetInstance().On("unity-loaded", ()=>{
 
 function setSettingsAgain(zettings) {
   BS.BanterScene.GetInstance().TeleportTo({x: -6, y: 0.02, z: -7}, 0, true);
-  zettings.EnableDevTools = false;
-  zettings.EnableTeleport = false;
-  zettings.EnableForceGrab = false;
-  zettings.EnableSpiderMan = false;
-  zettings.EnablePortals = false;
-  zettings.EnableGuests = true;
-  zettings.EnableQuaternionPose = false;
-  zettings.EnableControllerExtras = true;
-  zettings.EnableFriendPositionJoin = false;
-  zettings.EnableDefaultTextures = true;
-  zettings.EnableAvatars = true;
-  zettings.MaxOccupancy = 30;
-  zettings.RefreshRate = 72;
-  zettings.ClippingPlane = new BS.Vector2(0.02, 300);
-  zettings.SpawnPoint = new BS.Vector4(-6, 0.02, -7, 180);
-  zephiiscene.SetSettings(zettings);
+  zettings.EnableDevTools = false; zettings.EnableTeleport = false;
+  zettings.EnableForceGrab = false; zettings.EnableSpiderMan = false; zettings.EnablePortals = false;
+  zettings.EnableGuests = true; zettings.EnableQuaternionPose = false; zettings.EnableControllerExtras = true;
+  zettings.EnableFriendPositionJoin = false; zettings.EnableDefaultTextures = true; zettings.EnableAvatars = true;
+  zettings.MaxOccupancy = 30; zettings.RefreshRate = 72; zettings.ClippingPlane = new BS.Vector2(0.02, 300);
+  zettings.SpawnPoint = new BS.Vector4(-6, 0.02, -7, 180); zephiiscene.SetSettings(zettings);
 };
 
 async function zephiidrop() {
