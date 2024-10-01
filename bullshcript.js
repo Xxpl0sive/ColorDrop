@@ -120,3 +120,7 @@ async function handResetAttempt() {
         zephiiscene.LegacyAttachObject(handbutton, zephiiscene.localUser.uid, BS.LegacyAttachmentPosition.LEFT_HAND);
       } }, 100);
 };
+
+let handcontrolthingyZ = true;
+zephiiscene.On("user-joined", e => { if (e.detail.isLocal && handcontrolthingyZ === false) { handcontrolthingyZ = true; handResetAttempt(); }; });
+zephiiscene.On("user-left", e => { if (e.detail.isLocal) { handcontrolthingyZ = false; }; });
