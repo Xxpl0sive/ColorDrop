@@ -1,5 +1,5 @@
+const zephiiscene = BS.BanterScene.GetInstance();
 
-var testthing;
 if(window.isBanter){
 BS.BanterScene.GetInstance().On("unity-loaded", ()=>{
   BS.BanterScene.GetInstance().TeleportTo({x: -6, y: 0.02, z: -7}, 0, true);
@@ -21,9 +21,27 @@ BS.BanterScene.GetInstance().On("unity-loaded", ()=>{
   zettings.ClippingPlane = new BS.Vector2(0.02, 1500);
   zettings.SpawnPoint = new BS.Vector4(-6, 0.02, -7, 180);
   zephiiscene.SetSettings(zettings);
+  setTimeout(() => { setSettingsAgain(zettings); }, 2000);
 });
 
-const zephiiscene = BS.BanterScene.GetInstance();
+function setSettingsAgain(zettings) {
+  zettings.EnableDevTools = false;
+  zettings.EnableTeleport = false;
+  zettings.EnableForceGrab = false;
+  zettings.EnableSpiderMan = false;
+  zettings.EnablePortals = false;
+  zettings.EnableGuests = true;
+  zettings.EnableQuaternionPose = false;
+  zettings.EnableControllerExtras = true;
+  zettings.EnableFriendPositionJoin = false;
+  zettings.EnableDefaultTextures = true;
+  zettings.EnableAvatars = true;
+  zettings.MaxOccupancy = 30;
+  zettings.RefreshRate = 72;
+  zettings.ClippingPlane = new BS.Vector2(0.02, 1500);
+  zettings.SpawnPoint = new BS.Vector4(-6, 0.02, -7, 180);
+  zephiiscene.SetSettings(zettings);
+};
 
 async function zephiidrop() {
   const makeTriggerBox = async (pos, scale, color, callback) => {
@@ -35,7 +53,7 @@ async function zephiidrop() {
       // box.SetLayer(23);
       const transform = await box.AddComponent(new BS.Transform());
       transform.localScale = scale; transform.localPosition = pos;
-      box.On("trigger-enter", (e) => { if (e.detail.user !== undefined) { testthing = e; callback(); }});
+      box.On("trigger-enter", (e) => { if (e.detail.user !== undefined) { callback(); }});
   }   
 
   let startTime = -1, duration = 0, isStarted = false;
