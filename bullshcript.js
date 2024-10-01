@@ -18,7 +18,7 @@ BS.BanterScene.GetInstance().On("unity-loaded", ()=>{
   zettings.EnableAvatars = true;
   zettings.MaxOccupancy = 30;
   zettings.RefreshRate = 72;
-  zettings.ClippingPlane = new BS.Vector2(0.02, 1500);
+  zettings.ClippingPlane = new BS.Vector2(0.02, 300);
   zettings.SpawnPoint = new BS.Vector4(-6, 0.02, -7, 180);
   zephiiscene.SetSettings(zettings);
   setTimeout(() => { setSettingsAgain(zettings); }, 2000);
@@ -38,7 +38,7 @@ function setSettingsAgain(zettings) {
   zettings.EnableAvatars = true;
   zettings.MaxOccupancy = 30;
   zettings.RefreshRate = 72;
-  zettings.ClippingPlane = new BS.Vector2(0.02, 1500);
+  zettings.ClippingPlane = new BS.Vector2(0.02, 300);
   zettings.SpawnPoint = new BS.Vector4(-6, 0.02, -7, 180);
   zephiiscene.SetSettings(zettings);
 };
