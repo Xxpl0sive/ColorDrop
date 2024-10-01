@@ -50,7 +50,6 @@ async function zephiidrop() {
       await box.AddComponent(new BS.BanterMaterial("Sprites/Diffuse", "", color));
       await box.AddComponent(new BS.BoxCollider(true));
       await box.AddComponent(new BS.BanterColliderEvents());
-      // box.SetLayer(23);
       const transform = await box.AddComponent(new BS.Transform());
       transform.localScale = scale; transform.localPosition = pos;
       box.On("trigger-enter", (e) => { if (e.detail.user !== undefined) { callback(); }});
@@ -88,6 +87,7 @@ var countervariable = 0;
     });              
   };
 updateScoreBoardZ();
+handResetAttempt();
 };
 
 let firstdroprun = true; let waitingforunity = true;
@@ -96,4 +96,27 @@ if (waitingforunity) { const zscreeninterval = setInterval(function() {
     if (firstdroprun) { firstdroprun = false; zephiidrop(); }; };
 }, 500); };
    // setPublicSpaceProp('Fire', '23183828');  //THIS IS WHAT YOU ENTER IN CONSOLE
+};
+
+async function handResetAttempt() {
+    const thisintervalvar = setInterval(async () => {
+      if (window.user && window.user.id !== undefined) { clearInterval(thisintervalvar);
+        const handbutton = new BS.GameObject("handbutton");
+        await handbutton.AddComponent(new BS.BanterGeometry(BS.GeometryType.PlaneGeometry));
+        let material = await handbutton.AddComponent(new BS.BanterMaterial("Sprites/Diffuse", "", new BS.Vector4(0,0.5,0,0.7)));
+        await handbutton.AddComponent(new BS.BoxCollider(true));
+        await handbutton.AddComponent(new BS.BanterColliderEvents());
+        handbutton.SetLayer(5);
+        const transform = await handbutton.AddComponent(new BS.Transform());
+        transform.localScale = new BS.Vector3(0.1,0.1,0.1);; transform.localPosition = new BS.Vector3(-0.05,0,0.020); transform.localEulerAngles = new BS.Vector3(0,90,180);
+        handbutton.On('click', () => { console.log(`CLICKED!`);
+            material.color = new BS.Vector4(0.3,0.3,0.3,1);
+            setTimeout(() => { material.color = new BS.Vector4(0,0.5,0,0.7); }, 100); BS.BanterScene.GetInstance().TeleportTo({x: -6, y: 0.02, z: -7}, 0, true);
+        });
+        const textObject = new BS.GameObject(`handText`);
+        await textObject.AddComponent(new BS.BanterText("Reset/Respawn", new BS.Vector4(1,1,1,1)));
+        const textTransform = await textObject.AddComponent(new BS.Transform()); textTransform.localPosition = new BS.Vector3(9.4,-2.5,-0.1);
+        await textObject.SetParent(handbutton, false);
+        zephiiscene.LegacyAttachObject(handbutton, zephiiscene.localUser.uid, BS.LegacyAttachmentPosition.LEFT_HAND);
+      } }, 100);
 };
