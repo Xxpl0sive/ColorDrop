@@ -25,6 +25,7 @@ BS.BanterScene.GetInstance().On("unity-loaded", ()=>{
 });
 
 function setSettingsAgain(zettings) {
+  BS.BanterScene.GetInstance().TeleportTo({x: -6, y: 0.02, z: -7}, 0, true);
   zettings.EnableDevTools = false;
   zettings.EnableTeleport = false;
   zettings.EnableForceGrab = false;
