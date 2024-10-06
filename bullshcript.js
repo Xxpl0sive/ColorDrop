@@ -59,15 +59,13 @@ async function zephiidrop() {
   });
   // Finish Point
   makeTriggerBox(new BS.Vector3(-2,-308.9,-4), new BS.Vector3(90,1,90), new BS.Vector4(0,0,0,0), () => {
-      if(isStarted) { isStarted = false; duration = new Date().getTime() - startTime; setPublicSpaceProp(zephiiscene.localUser.name, duration); }
+      if(isStarted) { isStarted = false; duration = new Date().getTime() - startTime; checkSpaceState(zephiiscene.localUser.name, duration); }
   });
+  
 var countervariable = 0;
     AframeInjection.addEventListener('spaceStateChange', async e => {countervariable++
-      console.log(`Space State Listener.${countervariable}`);
-        updateScoreBoardZ(); 
-      e.detail.changes.forEach(change => { 
-        if (change.newValue > change.oldValue) {console.log(`Change is Greater`)};
-      console.log(change);})
+      console.log(`Space State Listener.${countervariable}`); updateScoreBoardZ(); 
+      e.detail.changes.forEach(change => { console.log(change);})
     });
   
   function updateScoreBoardZ() { scoreText.text = "Score: ";
@@ -78,6 +76,16 @@ var countervariable = 0;
       if (value < 999999 && value > 10000) {scoreText.text += "\n" + key.substring(0, 19) + ": " + value / 1000;}
     });              
   };
+  
+  function checkSpaceState(stateName, duration) { const spaceStates = zephiiscene.spaceState.public;
+    if (!spaceStates.hasOwnProperty(stateName)) { return setPublicSpaceProp(stateName, duration); }
+    const numStateValue = Number(spaceStates[stateName]); const numDuration = Number(duration);
+    if (!isNaN(numStateValue) && !isNaN(numDuration) && numStateValue > numDuration) {
+        console.log(`NUM ${numDuration} IS Less Than NUM ${numStateValue}`);
+        return setPublicSpaceProp(stateName, duration);
+    } console.log(`${duration} Not Less Than ${numStateValue}`);
+  }
+  
 updateScoreBoardZ();
 handResetAttempt();
 };
