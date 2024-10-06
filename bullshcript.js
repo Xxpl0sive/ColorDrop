@@ -66,6 +66,7 @@ var countervariable = 0;
       console.log(`Space State Listener.${countervariable}`);
         updateScoreBoardZ(); 
       e.detail.changes.forEach(change => { 
+        if (change.newValue > change.oldValue) {console.log(`Change is Greater`)};
       console.log(change);})
     });
   
