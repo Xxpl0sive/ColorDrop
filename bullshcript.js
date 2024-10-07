@@ -64,7 +64,7 @@ async function zephiidrop() {
   });
   // Finish Point
   makeTriggerBox(new BS.Vector3(-2,-308.9,-4), new BS.Vector3(90,1,90), new BS.Vector4(0,0,0,0), () => {
-      if(isStarted) { isStarted = false; duration = new Date().getTime() - startTime; checkSpaceState(zephiiscene.localUser.name, duration); }
+      if(isStarted) { isStarted = false; duration = new Date().getTime() - startTime; checkSpaceState(zephiiscene.localUser.name, duration); setPublicSpaceProp("latestjump:" + zephiiscene.localUser.name, duration);}
   });
   
 var countervariable = 0;
@@ -73,7 +73,7 @@ var countervariable = 0;
       e.detail.changes.forEach(change => { console.log(change);})
     });
   
-  function updateScoreBoardZ() { scoreText.text = "Score: ";
+  function updateScoreBoardZ() { scoreText.text = "Score: "; SecondScoreText.text = "Score: ";
     let spacestatethings = zephiiscene.spaceState.public;
     // Convert the entries to an array, sort by value, and then format the output
     let sortedEntries = Object.entries(spacestatethings).sort((a, b) => a[1] - b[1]);
