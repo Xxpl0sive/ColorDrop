@@ -51,7 +51,12 @@ async function zephiidrop() {
   const textObject = new BS.GameObject();
   const scoreText = await textObject.AddComponent(new BS.BanterText("Score: ", new BS.Vector4(1,1,1,1), 1, 0, 1));
   const transform = await textObject.AddComponent(new BS.Transform());
-  transform.localPosition = new BS.Vector3(-1,-312.8,-4); transform.localScale = new BS.Vector3(3, 3, 2);
+  transform.localPosition = new BS.Vector3(1,-312.8,-4); transform.localScale = new BS.Vector3(3, 3, 2);
+  
+  const secondTextObject = new BS.GameObject();
+  const SecondScoreText = await secondTextObject.AddComponent(new BS.BanterText("Score: ", new BS.Vector4(1,1,1,1), 1, 0, 1));
+  const SecondTransform = await secondTextObject.AddComponent(new BS.Transform());
+  SecondTransform.localPosition = new BS.Vector3(-2,-312.8,-4); SecondTransform.localScale = new BS.Vector3(3, 3, 2);
 
   // Start Point
   makeTriggerBox(new BS.Vector3(-7.33,-9.4,-6.12), new BS.Vector3(80,1,80), new BS.Vector4(0,1,0,0), () => {
@@ -73,7 +78,12 @@ var countervariable = 0;
     // Convert the entries to an array, sort by value, and then format the output
     let sortedEntries = Object.entries(spacestatethings).sort((a, b) => a[1] - b[1]);
     sortedEntries.forEach(([key, value]) => {
-      if (value < 999999 && value > 10000) {scoreText.text += "\n" + key.substring(0, 19) + ": " + value / 1000;}
+      if (!key.includes("latestjump:") && value < 999999 && value > 10000) {
+        scoreText.text += "\n" + key.substring(0, 19) + ": " + value / 1000;
+      } else if (key.includes("latestjump:") && value < 999999 && value > 10000) {
+        const strippedKey = key.replace("latestjump:", '');
+        SecondScoreText.text += "\n" + strippedKey.substring(0, 19).trim() + ": " + (value / 1000);
+      }
     });              
   };
   
