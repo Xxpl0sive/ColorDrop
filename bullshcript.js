@@ -56,7 +56,7 @@ async function zephiidrop() {
   const secondTextObject = new BS.GameObject();
   const SecondScoreText = await secondTextObject.AddComponent(new BS.BanterText("Score: ", new BS.Vector4(1,1,1,1), 1, 0, 1));
   const SecondTransform = await secondTextObject.AddComponent(new BS.Transform());
-  SecondTransform.localPosition = new BS.Vector3(3,-312.8,-4); SecondTransform.localScale = new BS.Vector3(3, 3, 2);
+  SecondTransform.localPosition = new BS.Vector3(5,-312.8,-4); SecondTransform.localScale = new BS.Vector3(3, 3, 2);
 
   // Start Point
   makeTriggerBox(new BS.Vector3(-7.33,-9.4,-6.12), new BS.Vector3(80,1,80), new BS.Vector4(0,1,0,0), () => {
