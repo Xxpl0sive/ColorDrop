@@ -83,7 +83,7 @@ var countervariable = 0;
     if (!isNaN(numStateValue) && !isNaN(numDuration) && numStateValue > numDuration) {
         console.log(`NUM ${numDuration} IS Less Than NUM ${numStateValue}`);
         return setPublicSpaceProp(stateName, duration);
-    } console.log(`${duration} Not Less Than ${numStateValue}`);
+    } console.log(`${stateName}'s: ${duration} Not Less Than ${numStateValue}`);
   }
   
 updateScoreBoardZ();
