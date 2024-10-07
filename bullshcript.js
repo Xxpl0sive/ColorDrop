@@ -73,7 +73,7 @@ var countervariable = 0;
       e.detail.changes.forEach(change => { console.log(change);})
     });
   
-  function updateScoreBoardZ() { scoreText.text = "Score: "; SecondScoreText.text = "Score: ";
+  function updateScoreBoardZ() { scoreText.text = "High Scores: "; SecondScoreText.text = "Latest Jump: ";
     let spacestatethings = zephiiscene.spaceState.public;
     // Convert the entries to an array, sort by value, and then format the output
     let sortedEntries = Object.entries(spacestatethings).sort((a, b) => a[1] - b[1]);
