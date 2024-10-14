@@ -2,7 +2,7 @@ const zephiiscene = BS.BanterScene.GetInstance();
 
 if(window.isBanter){
 BS.BanterScene.GetInstance().On("unity-loaded", ()=>{
-  BS.BanterScene.GetInstance().TeleportTo({x: -6, y: 0.02, z: -7}, 0, true);
+  BS.BanterScene.GetInstance().TeleportTo({x: -6, y: -0.5, z: -7}, 0, true);
   console.log("setSceneSettings Loading...");
   const zettings = new BS.SceneSettings();
   zettings.EnableDevTools = false;
@@ -25,7 +25,7 @@ BS.BanterScene.GetInstance().On("unity-loaded", ()=>{
 });
 
 function setSettingsAgain(zettings) {
-  BS.BanterScene.GetInstance().TeleportTo({x: -6, y: 0.02, z: -7}, 0, true);
+  BS.BanterScene.GetInstance().TeleportTo({x: -6, y: -0.5, z: -7}, 0, true);
   zettings.EnableDevTools = false; zettings.EnableTeleport = false;
   zettings.EnableForceGrab = false; zettings.EnableSpiderMan = false; zettings.EnablePortals = false;
   zettings.EnableGuests = true; zettings.EnableQuaternionPose = false; zettings.EnableControllerExtras = true;
