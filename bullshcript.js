@@ -1,5 +1,6 @@
 const zephiiscene = BS.BanterScene.GetInstance();
 
+if(window.isBanter){
 BS.BanterScene.GetInstance().On("unity-loaded", ()=>{
   BS.BanterScene.GetInstance().TeleportTo({x: -6, y: 0.02, z: -7}, 0, true);
   console.log("setSceneSettings Loading...");
@@ -200,3 +201,5 @@ async function handResetAttempt() {
 let handcontrolthingyZ = true;
 zephiiscene.On("user-joined", e => { if (e.detail.isLocal && handcontrolthingyZ === false) { handcontrolthingyZ = true; handResetAttempt(); }; });
 zephiiscene.On("user-left", e => { if (e.detail.isLocal) { handcontrolthingyZ = false; }; });
+
+};
