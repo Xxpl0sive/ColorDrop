@@ -54,7 +54,7 @@ async function zephiidrop() {
   });
   // Finish Point
   makeTriggerBox(new BS.Vector3(-2,-308.9,-4), new BS.Vector3(90,1,90), new BS.Vector4(0,0,0,0), () => {
-      if(isStarted) { isStarted = false; duration = new Date().getTime() - startTime; checkSpaceState(zephiiscene.localUser.name, duration); setPublicSpaceProp("latestjump:" + zephiiscene.localUser.name, duration);}
+      if(isStarted) { isStarted = false; duration = new Date().getTime() - startTime; checkSpaceState(zephiiscene.localUser.name, duration); setPublicSpaceProp("latest:" + zephiiscene.localUser.name, duration);}
   });
   
 var countervariable = 0;
@@ -84,7 +84,7 @@ async function updateScoreBoardZ() {
 
   // Create columns for latest jumps (offset along X-axis)
   await createColumns(
-    "Latest Jump: ",
+    "Latest Jumps: ",
     latestJumpEntries,
     { startX: 18, startY: -309.8, startZ: 0, rotation: 0, offsetAxis: "X", prefix: "LatestJumps_" },
     maxNamesPerColumn,
