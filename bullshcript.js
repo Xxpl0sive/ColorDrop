@@ -1,6 +1,5 @@
 const zephiiscene = BS.BanterScene.GetInstance();
 
-if(window.isBanter){
 BS.BanterScene.GetInstance().On("unity-loaded", ()=>{
   BS.BanterScene.GetInstance().TeleportTo({x: -6, y: 0.02, z: -7}, 0, true);
   console.log("setSceneSettings Loading...");
@@ -48,16 +47,6 @@ async function zephiidrop() {
 
   let startTime = -1, duration = 0, isStarted = false;
 
-  const textObject = new BS.GameObject();
-  const scoreText = await textObject.AddComponent(new BS.BanterText("Score: ", new BS.Vector4(1,1,1,1), 1, 0, 1));
-  const transform = await textObject.AddComponent(new BS.Transform());
-  transform.localPosition = new BS.Vector3(-1,-312.8,-4); transform.localScale = new BS.Vector3(3, 3, 2);
-  
-  const secondTextObject = new BS.GameObject();
-  const SecondScoreText = await secondTextObject.AddComponent(new BS.BanterText("Score: ", new BS.Vector4(1,1,1,1), 1, 0, 1));
-  const SecondTransform = await secondTextObject.AddComponent(new BS.Transform());
-  SecondTransform.localPosition = new BS.Vector3(5,-312.8,-4); SecondTransform.localScale = new BS.Vector3(3, 3, 2);
-
   // Start Point
   makeTriggerBox(new BS.Vector3(-7.33,-9.4,-6.12), new BS.Vector3(80,1,80), new BS.Vector4(0,1,0,0), () => {
       isStarted = true; startTime = new Date().getTime();
@@ -73,20 +62,98 @@ var countervariable = 0;
       e.detail.changes.forEach(change => { console.log(change);})
     });
   
-  function updateScoreBoardZ() { scoreText.text = "High Scores: "; SecondScoreText.text = "Latest Jump: ";
-    let spacestatethings = zephiiscene.spaceState.public;
-    // Convert the entries to an array, sort by value, and then format the output
-    let sortedEntries = Object.entries(spacestatethings).sort((a, b) => a[1] - b[1]);
-    sortedEntries.forEach(([key, value]) => {
-      if (!key.includes("latestjump:") && value < 999999 && value > 10000) {
-        scoreText.text += "\n" + key.substring(0, 19) + ": " + value / 1000;
-      } else if (key.includes("latestjump:") && value < 999999 && value > 10000) {
-        const strippedKey = key.replace("latestjump:", '');
-        SecondScoreText.text += "\n" + strippedKey.substring(0, 19).trim() + ": " + (value / 1000);
-      }
-    });              
-  };
-  
+async function updateScoreBoardZ() {
+  // Cleanup: Find and destroy all existing column objects
+  await cleanupColumns("HighScores_");
+  await cleanupColumns("LatestJumps_");
+
+  const maxNamesPerColumn = 20; // Max entries per column
+
+  // Separate entries into high scores and latest jumps
+  const { highScoreEntries, latestJumpEntries } = getSortedEntries(zephiiscene.spaceState.public);
+
+  // Create columns for high scores (offset along Z-axis)
+  await createColumns(
+    "High Scores: ",
+    highScoreEntries,
+    { startX: -15, startY: -309.8, startZ: 8, rotation: 1, offsetAxis: "Z", prefix: "HighScores_" },
+    maxNamesPerColumn,
+    8 // Offset value
+  );
+
+  // Create columns for latest jumps (offset along X-axis)
+  await createColumns(
+    "Latest Jump: ",
+    latestJumpEntries,
+    { startX: 18, startY: -309.8, startZ: 0, rotation: 0, offsetAxis: "X", prefix: "LatestJumps_" },
+    maxNamesPerColumn,
+    8 // Offset value
+  );
+}
+
+// Helper function to clean up columns by prefix
+async function cleanupColumns(prefix) {
+  let columnIndex = 0;
+  while (true) {
+    const columnObject = await BS.BanterScene.GetInstance().Find(`${prefix}${columnIndex}`);
+    if (!columnObject) break; // Stop when no more columns are found
+    columnObject.Destroy(); // Destroy the existing column object
+    columnIndex++;
+  }
+}
+
+// Helper function to get sorted entries
+function getSortedEntries(spacestatethings) {
+  let sortedEntries = Object.entries(spacestatethings).sort((a, b) => a[1] - b[1]);
+  let highScoreEntries = [];
+  let latestJumpEntries = [];
+
+  sortedEntries.forEach(([key, value]) => {
+    if (!key.includes("latestjump:") && value < 999999 && value > 10000) {
+      highScoreEntries.push(`${key.substring(0, 19).trim()}: ${value / 1000}`);
+    } else if (key.includes("latestjump:") && value < 999999 && value > 10000) {
+      const strippedKey = key.replace("latestjump:", '').substring(0, 19).trim();
+      latestJumpEntries.push(`${strippedKey}: ${value / 1000}`);
+    }
+  });
+
+  return { highScoreEntries, latestJumpEntries };
+}
+
+// Helper function to create text columns dynamically with unique names and custom offsets
+async function createColumns(
+  title,
+  entries,
+  { startX, startY, startZ, rotation, offsetAxis, prefix },
+  maxPerColumn,
+  offsetValue
+) {
+  let currentColumn = 0;
+
+  for (let i = 0; i < entries.length; i += maxPerColumn) {
+    // Create a new text object with a unique name for each column
+    const textObject = new BS.GameObject(`${prefix}${currentColumn}`);
+    const scoreText = await textObject.AddComponent(new BS.BanterText(title, new BS.Vector4(1, 1, 1, 1)));
+
+    // Add the relevant entries to the text
+    let columnText = entries.slice(i, i + maxPerColumn).join("\n");
+    scoreText.text += `\n${columnText}`;
+
+    // Set the position and rotation of the column
+    const transform = await textObject.AddComponent(new BS.Transform());
+
+    // Apply offset based on the chosen axis (X or Z)
+    let positionX = startX + (offsetAxis === "X" ? currentColumn * offsetValue : 0);
+    let positionZ = startZ + (offsetAxis === "Z" ? currentColumn * offsetValue : 0);
+
+    transform.localPosition = new BS.Vector3(positionX, startY, positionZ);
+    transform.localRotation = new BS.Vector3(0, rotation, 0); // Apply custom rotation
+    transform.localScale  = new BS.Vector3(2, 2, 1);
+
+    currentColumn++;
+  }
+}
+
   function checkSpaceState(stateName, duration) { const spaceStates = zephiiscene.spaceState.public;
     if (!spaceStates.hasOwnProperty(stateName)) { return setPublicSpaceProp(stateName, duration); }
     const numStateValue = Number(spaceStates[stateName]); const numDuration = Number(duration);
@@ -106,7 +173,6 @@ if (waitingforunity) { const zscreeninterval = setInterval(function() {
     if (firstdroprun) { firstdroprun = false; zephiidrop(); }; };
 }, 500); };
    // setPublicSpaceProp('Fire', '23183828');  //THIS IS WHAT YOU ENTER IN CONSOLE
-};
 
 async function handResetAttempt() {
     const thisintervalvar = setInterval(async () => {
