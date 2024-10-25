@@ -68,7 +68,7 @@ async function updateScoreBoardZ() {
   await cleanupColumns("HighScores_");
   await cleanupColumns("LatestJumps_");
 
-  const maxNamesPerColumn = 20; // Max entries per column
+  const maxNamesPerColumn = 25; // Max entries per column
 
   // Separate entries into high scores and latest jumps
   const { highScoreEntries, latestJumpEntries } = getSortedEntries(zephiiscene.spaceState.public);
@@ -77,18 +77,18 @@ async function updateScoreBoardZ() {
   await createColumns(
     "High Scores: ",
     highScoreEntries,
-    { startX: -15, startY: -309.8, startZ: 8, rotation: 1, offsetAxis: "Z", prefix: "HighScores_" },
+    { startX: -15, startY: -309.4, startZ: 9, rotation: 1, offsetAxis: "Z", prefix: "HighScores_" },
     maxNamesPerColumn,
-    8 // Offset value
+    7.5 // Offset value
   );
 
   // Create columns for latest jumps (offset along X-axis)
   await createColumns(
     "Latest Jumps: ",
     latestJumpEntries,
-    { startX: 18, startY: -309.8, startZ: 0, rotation: 0, offsetAxis: "X", prefix: "LatestJumps_" },
+    { startX: 18, startY: -309.4, startZ: 0, rotation: 0, offsetAxis: "X", prefix: "LatestJumps_" },
     maxNamesPerColumn,
-    8 // Offset value
+    7.5 // Offset value
   );
 }
 
