@@ -54,7 +54,7 @@ async function zephiidrop() {
   });
   // Finish Point
   makeTriggerBox(new BS.Vector3(-2,-308.9,-4), new BS.Vector3(90,1,90), new BS.Vector4(0,0,0,0), () => {
-      if(isStarted) { isStarted = false; duration = new Date().getTime() - startTime; checkSpaceState(zephiiscene.localUser.name, duration); setPublicSpaceProp("latestjump:" + zephiiscene.localUser.name, duration);}
+      if(isStarted) { isStarted = false; duration = new Date().getTime() - startTime; checkSpaceState(zephiiscene.localUser.name.replace(/["'\\]/g, '\\$&'), duration); setPublicSpaceProp("latestjump:" + zephiiscene.localUser.name.replace(/["'\\]/g, '\\$&'), duration);}
   });
   
 var countervariable = 0;
