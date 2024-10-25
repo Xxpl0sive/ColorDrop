@@ -77,7 +77,7 @@ async function updateScoreBoardZ() {
   await createColumns(
     "High Scores: ",
     highScoreEntries,
-    { startX: -15, startY: -309.4, startZ: 9, rotation: 1, offsetAxis: "Z", prefix: "HighScores_" },
+    { startX: -15, startY: -309.4, startZ: 7, rotation: 1, offsetAxis: "Z", prefix: "HighScores_" },
     maxNamesPerColumn,
     7.5 // Offset value
   );
