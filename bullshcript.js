@@ -108,6 +108,9 @@ async function createOrUpdateColumns(
     if (textObject) {
       // Update existing text object
       scoreText = await textObject.GetComponent(BS.BanterText);
+      if (!scoreText) {
+        scoreText = await textObject.AddComponent(new BS.BanterText("", new BS.Vector4(1, 1, 1, 1)));
+      }
     } else {
       // Create a new text object
       textObject = new BS.GameObject(objectName);
