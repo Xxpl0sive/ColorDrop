@@ -64,17 +64,13 @@ var countervariable = 0;
     });
   
 async function updateScoreBoardZ() {
-  // Cleanup: Find and destroy all existing column objects
-  await cleanupColumns("HighScores_");
-  await cleanupColumns("LatestJumps_");
-
   const maxNamesPerColumn = 25; // Max entries per column
 
   // Separate entries into high scores and latest jumps
   const { highScoreEntries, latestJumpEntries } = getSortedEntries(zephiiscene.spaceState.public);
 
-  // Create columns for high scores (offset along Z-axis)
-  await createColumns(
+  // Update or create columns for high scores (offset along Z-axis)
+  await createOrUpdateColumns(
     "High Scores: ",
     highScoreEntries,
     { startX: -15, startY: -309.4, startZ: 7, rotation: 1, offsetAxis: "Z", prefix: "HighScores_" },
@@ -82,8 +78,8 @@ async function updateScoreBoardZ() {
     7.5 // Offset value
   );
 
-  // Create columns for latest jumps (offset along X-axis)
-  await createColumns(
+  // Update or create columns for latest jumps (offset along X-axis)
+  await createOrUpdateColumns(
     "Latest Jumps: ",
     latestJumpEntries,
     { startX: 18, startY: -309.4, startZ: 0, rotation: 0, offsetAxis: "X", prefix: "LatestJumps_" },
@@ -92,16 +88,47 @@ async function updateScoreBoardZ() {
   );
 }
 
-// Helper function to clean up columns by prefix
-async function cleanupColumns(prefix) {
-  let columnIndex = 0;
-  while (true) {
-    const columnObject = await BS.BanterScene.GetInstance().Find(`${prefix}${columnIndex}`);
-    if (!columnObject) break; // Stop when no more columns are found
-    columnObject.Destroy(); // Destroy the existing column object
-    columnIndex++;
-  }
-}
+// Helper function to create or update text columns dynamically
+async function createOrUpdateColumns(
+  title,
+  entries,
+  { startX, startY, startZ, rotation, offsetAxis, prefix },
+  maxPerColumn,
+  offsetValue
+) {
+  let currentColumn = 0;
+
+  for (let i = 0; i < entries.length; i += maxPerColumn) {
+    const objectName = `${prefix}${currentColumn}`;
+
+    // Check if the text object already exists
+    let textObject = await BS.BanterScene.GetInstance().Find(objectName);
+    let scoreText;
+
+    if (textObject) {
+      // Update existing text object
+      scoreText = await textObject.GetComponent(BS.BanterText);
+    } else {
+      // Create a new text object
+      textObject = new BS.GameObject(objectName);
+      scoreText = await textObject.AddComponent(new BS.BanterText(title, new BS.Vector4(1, 1, 1, 1)));
+
+      // Set position and rotation for the new column
+      const transform = await textObject.AddComponent(new BS.Transform());
+      let positionX = startX + (offsetAxis === "X" ? currentColumn * offsetValue : 0);
+      let positionZ = startZ + (offsetAxis === "Z" ? currentColumn * offsetValue : 0);
+      transform.localPosition = new BS.Vector3(positionX, startY, positionZ);
+      transform.localRotation = new BS.Vector3(0, rotation, 0);
+      transform.localScale = new BS.Vector3(2, 2, 1);
+    };
+
+    // Update the text content with the relevant entries
+    let columnText = entries.slice(i, i + maxPerColumn).join("\n");
+    scoreText.text = `${title}\n${columnText}`;
+
+    currentColumn++;
+  };
+};
 
 // Helper function to get sorted entries
 function getSortedEntries(spacestatethings) {
