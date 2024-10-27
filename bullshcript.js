@@ -122,9 +122,17 @@ async function createOrUpdateColumns(
       transform.localScale = new BS.Vector3(2, 2, 1);
     };
 
-    // Update the text content with the relevant entries
-    let columnText = entries.slice(i, i + maxPerColumn).join("\n");
-    scoreText.text = `${title}\n${columnText}`;
+    // Safely update the text content
+    try {
+      if (scoreText) {
+        let columnText = entries.slice(i, i + maxPerColumn).join("\n");
+        scoreText.text = `${title}\n${columnText}`;  // Assign text safely
+      } else {
+        console.error(`BanterText component is not available for object: ${objectName}`);
+      }
+    } catch (error) {
+      console.error(`Error updating text for ${objectName}:`, error);
+    }
 
     currentColumn++;
   };
