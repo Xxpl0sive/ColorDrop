@@ -43,7 +43,7 @@ async function zephiidrop() {
       await box.AddComponent(new BS.BanterColliderEvents());
       const transform = await box.AddComponent(new BS.Transform());
       transform.localScale = scale; transform.localPosition = pos;
-      box.On("trigger-enter", (e) => { console.log(e.detail); if (e.detail.tag === "__BA_LocalPlayer") { console.log('Local Player Success'); console.log(e.detail); if (e.detail.user.uid === zephiiscene.localUser.uid) { callback(); } } });
+      box.On("trigger-enter", (e) => { if (e.detail.user !== undefined) { console.log('User Defined'); console.log(e.detail); if (e.detail.user.isLocal === true) { callback(); } } });
   }   
 
   let startTime = -1, duration = 0, isStarted = false;
