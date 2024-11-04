@@ -149,10 +149,10 @@ function getSortedEntries(spacestatethings) {
 
   sortedEntries.forEach(([key, value]) => {
     if (!key.includes("latestjump:") && value < 999999 && value > 10000) {
-      highScoreEntries.push(`${key.substring(0, 19).trim()}: ${value / 1000}`);
+      highScoreEntries.push(`${key.substring(0, 19).trim()}: <color=#FFFF00>${value / 1000}</color>`);
     } else if (key.includes("latestjump:") && value < 999999 && value > 10000) {
       const strippedKey = key.replace("latestjump:", '').substring(0, 19).trim();
-      latestJumpEntries.push(`${strippedKey}: ${value / 1000}`);
+      latestJumpEntries.push(`${strippedKey}: <color=#FFFF00>${value / 1000}</color>`);
     }
   });
 
