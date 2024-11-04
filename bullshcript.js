@@ -43,7 +43,7 @@ async function zephiidrop() {
       await box.AddComponent(new BS.BanterColliderEvents());
       const transform = await box.AddComponent(new BS.Transform());
       transform.localScale = scale; transform.localPosition = pos;
-      box.On("trigger-enter", (e) => { if (e.detail.user !== undefined) { console.log('User Defined'); console.log(e.detail); if (e.detail.user.isLocal === true) { callback(); } } });
+      box.On("trigger-enter", (e) => { if (e.detail.user.isLocal === true && e.detail.user !== undefined) { callback(); }  });
   }   
 
   let startTime = -1, duration = 0, isStarted = false;
