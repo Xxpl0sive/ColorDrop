@@ -64,7 +64,7 @@ var countervariable = 0;
     });
   
 async function updateScoreBoardZ() {
-  const maxNamesPerColumn = 25; // Max entries per column
+  const maxNamesPerColumn = 28; // Max entries per column
 
   // Separate entries into high scores and latest jumps
   const { highScoreEntries, latestJumpEntries } = getSortedEntries(zephiiscene.spaceState.public);
@@ -84,7 +84,7 @@ async function updateScoreBoardZ() {
     latestJumpEntries,
     { startX: 18, startY: -309.4, startZ: 0, rotation: 0, offsetAxis: "X", prefix: "LatestJumps_" },
     maxNamesPerColumn,
-    7.5 // Offset value
+    7.2 // Offset value
   );
 }
 
