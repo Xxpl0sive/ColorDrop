@@ -210,7 +210,7 @@ if (waitingforunity) { const zscreeninterval = setInterval(function() {
 
 async function handResetAttempt() {
     const thisintervalvar = setInterval(async () => {
-      if (window.user && window.user.id !== undefined) { clearInterval(thisintervalvar);
+      if (zephiiscene.localUser && zephiiscene.localUser.uid !== undefined) { clearInterval(thisintervalvar);
         const handbutton = new BS.GameObject("handbutton");
         await handbutton.AddComponent(new BS.BanterGeometry(BS.GeometryType.PlaneGeometry));
         let material = await handbutton.AddComponent(new BS.BanterMaterial("Sprites/Diffuse", "", new BS.Vector4(0,0.5,0,0.7)));
