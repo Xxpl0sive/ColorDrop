@@ -31,7 +31,7 @@ function setSettingsAgain(zettings) {
 
 async function zephiidrop() {
   const makeTriggerBox = async (pos, scale, color, callback) => {
-      const box = new BS.GameObject();
+      const box = await new BS.GameObject().Async();
       await box.AddComponent(new BS.BanterGeometry(BS.GeometryType.BoxGeometry));
       await box.AddComponent(new BS.BanterMaterial("Sprites/Diffuse", "", color));
       await box.AddComponent(new BS.BoxCollider(true));
@@ -108,7 +108,7 @@ async function createOrUpdateColumns(
       }
     } else {
       // Create a new text object
-      textObject = new BS.GameObject(objectName);
+      textObject = await new BS.GameObject(objectName).Async();
       scoreText = await textObject.AddComponent(new BS.BanterText(title, new BS.Vector4(1, 1, 1, 1)));
 
       // Set position and rotation for the new column
@@ -166,7 +166,7 @@ async function createColumns(
 
   for (let i = 0; i < entries.length; i += maxPerColumn) {
     // Create a new text object with a unique name for each column
-    const textObject = new BS.GameObject(`${prefix}${currentColumn}`);
+    const textObject = await new BS.GameObject(`${prefix}${currentColumn}`).Async();
     const scoreText = await textObject.AddComponent(new BS.BanterText(title, new BS.Vector4(1, 1, 1, 1)));
 
     // Add the relevant entries to the text
@@ -211,7 +211,7 @@ if (waitingforunity) { const zscreeninterval = setInterval(function() {
 async function handResetAttempt() {
     const thisintervalvar = setInterval(async () => {
       if (zephiiscene.localUser && zephiiscene.localUser.uid !== undefined) { clearInterval(thisintervalvar);
-        const handbutton = new BS.GameObject("handbutton");
+        const handbutton = await new BS.GameObject("handbutton").Async();
         await handbutton.AddComponent(new BS.BanterGeometry(BS.GeometryType.PlaneGeometry));
         let material = await handbutton.AddComponent(new BS.BanterMaterial("Sprites/Diffuse", "", new BS.Vector4(0,0.5,0,0.7)));
         await handbutton.AddComponent(new BS.BoxCollider(true));
@@ -223,7 +223,7 @@ async function handResetAttempt() {
             material.color = new BS.Vector4(0.3,0.3,0.3,1);
             setTimeout(() => { material.color = new BS.Vector4(0,0.5,0,0.7); }, 100); BS.BanterScene.GetInstance().TeleportTo({x: -6, y: 0.02, z: -7}, 0, true);
         });
-        const textObject = new BS.GameObject(`handText`);
+        const textObject = await new BS.GameObject(`handText`).Async();
         await textObject.AddComponent(new BS.BanterText("Reset/Respawn", new BS.Vector4(1,1,1,1)));
         const textTransform = await textObject.AddComponent(new BS.Transform()); textTransform.localPosition = new BS.Vector3(9.4,-2.5,-0.1);
         await textObject.SetParent(handbutton, false);
