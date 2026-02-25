@@ -1,4 +1,5 @@
-const zephiiscene = BS.BanterScene.GetInstance();
+window.addEventListener("unity-loaded", async () => {
+  const zephiiscene = BS.BanterScene.GetInstance();
 
 if(window.isBanter){
 BS.BanterScene.GetInstance().On("unity-loaded", ()=>{
@@ -236,3 +237,5 @@ zephiiscene.On("user-joined", e => { if (e.detail.isLocal && handcontrolthingyZ 
 zephiiscene.On("user-left", e => { if (e.detail.isLocal) { handcontrolthingyZ = false; }; });
 
 };
+  
+});
