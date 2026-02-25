@@ -1,4 +1,4 @@
-window.addEventListener("unity-loaded", async () => {
+window.addEventListener("unity-loaded", () => {
   const zephiiscene = BS.BanterScene.GetInstance();
 
   BS.BanterScene.GetInstance().TeleportTo({x: -6, y: 0, z: -7}, 0, true);
