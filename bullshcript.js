@@ -1,8 +1,6 @@
 window.addEventListener("unity-loaded", async () => {
   const zephiiscene = BS.BanterScene.GetInstance();
 
-if(window.isBanter){
-BS.BanterScene.GetInstance().On("unity-loaded", ()=>{
   BS.BanterScene.GetInstance().TeleportTo({x: -6, y: 0, z: -7}, 0, true);
   console.log("setSceneSettings Loading...");
   const zettings = new BS.SceneSettings();
@@ -23,7 +21,6 @@ BS.BanterScene.GetInstance().On("unity-loaded", ()=>{
   zettings.SpawnPoint = new BS.Vector4(-6, -0.02, -7, 180);
   zephiiscene.SetSettings(zettings);
   setTimeout(() => { setSettingsAgain(zettings); }, 2000);
-});
 
 function setSettingsAgain(zettings) {
   BS.BanterScene.GetInstance().TeleportTo({x: -6, y: 0, z: -7}, 0, true);
@@ -235,7 +232,5 @@ async function handResetAttempt() {
 let handcontrolthingyZ = true;
 zephiiscene.On("user-joined", e => { if (e.detail.isLocal && handcontrolthingyZ === false) { handcontrolthingyZ = true; handResetAttempt(); }; });
 zephiiscene.On("user-left", e => { if (e.detail.isLocal) { handcontrolthingyZ = false; }; });
-
-};
   
 });
